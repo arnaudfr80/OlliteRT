@@ -46,6 +46,7 @@ import com.ollitert.llm.server.data.DEFAULT_TOPP
 import com.ollitert.llm.server.data.DEFAULT_VISION_ACCELERATOR
 import com.ollitert.llm.server.data.MIN_STORAGE_FOR_MODEL_INIT_BYTES
 import com.ollitert.llm.server.data.Model
+import com.ollitert.llm.server.data.ServerPrefs
 import com.ollitert.llm.server.data.bytesToMb
 import com.ollitert.llm.server.service.EventCategory
 import com.ollitert.llm.server.service.PromptBuilder
@@ -281,16 +282,17 @@ object ServerLlmModelHelper {
       engine = Engine(engineConfig)
       engine.initialize()
 
-      // Enable MTP via speculative decoding
-      // https://ai.google.dev/edge/litert-lm/android#mtp
-      @OptIn(ExperimentalApi::class)
-      ExperimentalFlags.enableSpeculativeDecoding = true
-
       // THREAD SAFETY: This global flag has a set/read/reset race if initialize() and
       // resetConversation() overlap on different threads. Currently benign — all server-layer
       // callers pass false (the default), so the race has no observable effect.
       ExperimentalFlags.enableConversationConstrainedDecoding =
         enableConversationConstrainedDecoding
+      
+      // Enable Multi-token Prediction (MTP) via speculative decoding based on user preference
+      val mtpEnabled = ServerPrefs.isMtpEnabled(context)
+      ExperimentalFlags.enableMultiTokenPrediction = mtpEnabled
+      Log.i(TAG, "Multi-token prediction: enabled=$mtpEnabled")
+      
       try {
         // SDK issue #2211: the sampler .so has a linker dependency bug — on devices
         // where OpenCL is inaccessible, sampler settings may be silently ignored.
@@ -319,6 +321,7 @@ object ServerLlmModelHelper {
         model.instance = LlmModelInstance(engine = engine, conversation = conversation)
       } finally {
         ExperimentalFlags.enableConversationConstrainedDecoding = false
+        ExperimentalFlags.enableMultiTokenPrediction = false
       }
       Log.i(TAG, "Engine initialized successfully on ${preferredBackend::class.simpleName} for '${model.name}'")
       RequestLogStore.addEvent(
@@ -367,6 +370,8 @@ object ServerLlmModelHelper {
           fallbackEngine.initialize()
           ExperimentalFlags.enableConversationConstrainedDecoding =
             enableConversationConstrainedDecoding
+          val mtpEnabled = ServerPrefs.isMtpEnabled(context)
+          ExperimentalFlags.enableMultiTokenPrediction = mtpEnabled
           try {
             val conversation =
               fallbackEngine.createConversation(
@@ -385,6 +390,7 @@ object ServerLlmModelHelper {
             model.instance = LlmModelInstance(engine = fallbackEngine, conversation = conversation)
           } finally {
             ExperimentalFlags.enableConversationConstrainedDecoding = false
+            ExperimentalFlags.enableMultiTokenPrediction = false
           }
           Log.i(TAG, "CPU fallback successful for '${model.name}'")
           RequestLogStore.addEvent(
