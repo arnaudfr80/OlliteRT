@@ -281,6 +281,11 @@ object ServerLlmModelHelper {
       engine = Engine(engineConfig)
       engine.initialize()
 
+      // Enable MTP via speculative decoding
+      // https://ai.google.dev/edge/litert-lm/android#mtp
+      @OptIn(ExperimentalApi::class)
+      ExperimentalFlags.enableSpeculativeDecoding = true
+
       // THREAD SAFETY: This global flag has a set/read/reset race if initialize() and
       // resetConversation() overlap on different threads. Currently benign — all server-layer
       // callers pass false (the default), so the race has no observable effect.
