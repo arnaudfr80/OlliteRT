@@ -1,0 +1,42 @@
+name: Build unsigned APK
+
+on:
+  workflow_dispatch:
+
+env:
+  JDK_VERSION: '21'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Android/src
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: ${{ env.JDK_VERSION }}
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Ensure Gradle wrapper is executable
+        run: chmod +x ./gradlew
+
+      - name: Build unsigned APK
+        run: |
+          ./gradlew assembleDebug
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: OlliteRT-unsigned
+          path: Android/src/app/build/outputs/apk/debug/
+          retention-days: 7
