@@ -31,9 +31,9 @@ import kotlinx.serialization.json.long
 
 private const val PREFS_NAME = "llm_http_prefs"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Server Config — port, CORS, bearer token
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_PORT = "port"
 private const val KEY_BEARER_TOKEN = "bearer_token"
@@ -41,9 +41,9 @@ private const val KEY_HF_TOKEN = "hf_token"
 private const val KEY_CORS_ALLOWED_ORIGINS = "cors_allowed_origins"
 private const val DEFAULT_CORS_ALLOWED_ORIGINS = "*"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Model Config — default model, inference config, system prompts, recommendations
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_DEFAULT_MODEL_NAME = "default_model_name"
 private const val KEY_PREFIX_SYSTEM_PROMPT = "system_prompt_"
@@ -57,9 +57,9 @@ private const val KEY_AUTO_TRIM_PROMPTS = "auto_trim_prompts"
 private const val KEY_KEEP_PARTIAL_RESPONSE = "keep_partial_response"
 private const val KEY_SCHEMA_INJECTION_TOOL_CALLING = "schema_injection_tool_calling"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § UI Preferences — keep screen on, log display, stream preview, metrics
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_KEEP_SCREEN_ON = "keep_screen_on"
 private const val KEY_AUTO_EXPAND_LOGS = "auto_expand_logs"
@@ -75,9 +75,9 @@ private const val DEFAULT_RESOLVE_CLIENT_HOSTNAMES = false
 private const val KEY_HIDE_HEALTH_LOGS = "hide_health_logs"
 private const val DEFAULT_HIDE_HEALTH_LOGS = false
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Log Persistence — enabled, max entries, auto delete
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_LOG_PERSISTENCE_ENABLED = "log_persistence_enabled"
 private const val KEY_LOG_MAX_ENTRIES = "log_max_entries"
@@ -86,39 +86,46 @@ private const val DEFAULT_LOG_PERSISTENCE_ENABLED = false
 private const val DEFAULT_LOG_MAX_ENTRIES = 500
 private const val DEFAULT_LOG_AUTO_DELETE_MINUTES = 7 * 24 * 60 // 7 days
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Keep Alive — auto-unload model after idle timeout to free RAM
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_KEEP_ALIVE_ENABLED = "keep_alive_enabled"
 private const val KEY_KEEP_ALIVE_MINUTES = "keep_alive_minutes"
 private const val DEFAULT_KEEP_ALIVE_ENABLED = false
 private const val DEFAULT_KEEP_ALIVE_MINUTES = 5
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
+// § Multi-token Prediction — enable/disable MTP via speculative decoding
+// ════════════════════════════════════════════════════════════════════════════════════════
+
+private const val KEY_MTP_ENABLED = "mtp_enabled"
+private const val DEFAULT_MTP_ENABLED = true
+
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Boot & Lifecycle — auto start on boot, clear logs on stop
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_AUTO_START_ON_BOOT = "auto_start_on_boot"
 private const val KEY_CLEAR_LOGS_ON_STOP = "clear_logs_on_stop"
 private const val KEY_CONFIRM_CLEAR_LOGS = "confirm_clear_logs"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Developer / Debug — verbose debug, ignore client sampler params
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_VERBOSE_DEBUG_ENABLED = "verbose_debug_enabled"
 private const val KEY_IGNORE_CLIENT_SAMPLER_PARAMS = "ignore_client_sampler_params"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Request Queueing — reject concurrent requests instead of queueing
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_REJECT_WHEN_BUSY = "reject_when_busy"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Home Assistant / STT — HA integration, STT transcription prompt
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_HA_INTEGRATION_ENABLED = "ha_integration_enabled"
 private const val KEY_STT_TRANSCRIPTION_PROMPT = "stt_transcription_prompt"
@@ -127,9 +134,9 @@ private const val KEY_STT_TRANSCRIPTION_PROMPT_TEXT = "stt_transcription_prompt_
 internal const val DEFAULT_STT_TRANSCRIPTION_PROMPT_TEXT =
   "Transcribe the audio exactly as spoken. Output only the transcribed text, nothing else."
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Update Check — enabled, interval, cached state, consecutive failures
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_UPDATE_CHECK_ENABLED = "update_check_enabled"
 private const val KEY_UPDATE_CHECK_INTERVAL_HOURS = "update_check_interval_hours"
@@ -144,9 +151,9 @@ private const val KEY_CACHED_CROSS_CHANNEL_VERSION = "cached_cross_channel_versi
 private const val DEFAULT_UPDATE_CHECK_ENABLED = true
 private const val DEFAULT_UPDATE_CHECK_INTERVAL_HOURS = 24
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Engagement Prompt — manual start count, show count, dismissed
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_MANUAL_START_COUNT = "manual_start_count"
 private const val KEY_ENGAGEMENT_PROMPT_PERMANENTLY_DISMISSED = "engagement_prompt_permanently_dismissed"
@@ -158,29 +165,29 @@ private const val ENGAGEMENT_PROMPT_FIRST_THRESHOLD = 3
 /** Manual start count threshold for showing the engagement prompt the second time. */
 private const val ENGAGEMENT_PROMPT_SECOND_THRESHOLD = 13
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § GPU Availability — one-time dialog shown, server start dialog dismissed
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_GPU_UNAVAILABLE_DIALOG_SHOWN = "gpu_unavailable_dialog_shown"
 private const val KEY_GPU_UNAVAILABLE_SERVER_START_DISMISSED = "gpu_unavailable_server_start_dismissed"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Model Update Detection — allowlist version, ignored updates
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_ALLOWLIST_CONTENT_VERSION = "allowlist_content_version"
 private const val KEY_IGNORED_MODEL_UPDATES = "ignored_model_updates"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § DataStore Corruption Recovery
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 private const val KEY_CORRUPTED_DATASTORES = "corrupted_datastores"
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 // § Migrations — prefs key migration, STT key migration
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════════════════
 
 // TODO: Remove after 1.0.0 — migration from 0.9.0-beta keys (model.name → model.prefsKey).
 private const val KEY_PREFS_KEY_MIGRATION_DONE = "prefs_key_migration_v1"
@@ -249,6 +256,7 @@ object ServerPrefs {
   private val KEEP_PARTIAL_RESPONSE = BoolPref(KEY_KEEP_PARTIAL_RESPONSE, false)
   private val SCHEMA_INJECTION_TOOL_CALLING = BoolPref(KEY_SCHEMA_INJECTION_TOOL_CALLING, true)
   private val SHOW_MODEL_RECOMMENDATIONS = BoolPref(KEY_SHOW_MODEL_RECOMMENDATIONS, true)
+  private val MTP_ENABLED = BoolPref(KEY_MTP_ENABLED, DEFAULT_MTP_ENABLED)
 
   // UI Preferences
   private val KEEP_SCREEN_ON = BoolPref(KEY_KEEP_SCREEN_ON, true)
@@ -304,9 +312,9 @@ object ServerPrefs {
   // Model Update Detection
   private val ALLOWLIST_CONTENT_VERSION = IntPref(KEY_ALLOWLIST_CONTENT_VERSION, 0)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Server Config
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun getPort(context: Context): Int = get(context, PORT)
 
@@ -339,9 +347,9 @@ object ServerPrefs {
     prefs(context).edit { putString(KEY_CORS_ALLOWED_ORIGINS, origins) }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Model Config
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun getDefaultModelName(context: Context): String? =
     prefs(context)
@@ -378,6 +386,9 @@ object ServerPrefs {
   fun isShowModelRecommendations(context: Context): Boolean = get(context, SHOW_MODEL_RECOMMENDATIONS)
   fun setShowModelRecommendations(context: Context, enabled: Boolean) = set(context, SHOW_MODEL_RECOMMENDATIONS, enabled)
 
+  fun isMtpEnabled(context: Context): Boolean = get(context, MTP_ENABLED)
+  fun setMtpEnabled(context: Context, enabled: Boolean) = set(context, MTP_ENABLED, enabled)
+
   fun getSystemPrompt(context: Context, modelName: String): String =
     prefs(context)
       .getString(KEY_PREFIX_SYSTEM_PROMPT + modelName, "") ?: ""
@@ -409,9 +420,9 @@ object ServerPrefs {
     prefs(context).edit { remove(KEY_PREFIX_INFERENCE_CONFIG + modelName) }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § UI Preferences
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isKeepScreenOn(context: Context): Boolean = get(context, KEEP_SCREEN_ON)
   fun setKeepScreenOn(context: Context, enabled: Boolean) = set(context, KEEP_SCREEN_ON, enabled)
@@ -443,9 +454,9 @@ object ServerPrefs {
   fun isHideHealthLogs(context: Context): Boolean = get(context, HIDE_HEALTH_LOGS)
   fun setHideHealthLogs(context: Context, enabled: Boolean) = set(context, HIDE_HEALTH_LOGS, enabled)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Log Persistence
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isLogPersistenceEnabled(context: Context): Boolean = get(context, LOG_PERSISTENCE_ENABLED)
   fun setLogPersistenceEnabled(context: Context, enabled: Boolean) = set(context, LOG_PERSISTENCE_ENABLED, enabled)
@@ -456,9 +467,9 @@ object ServerPrefs {
   fun getLogAutoDeleteMinutes(context: Context): Long = get(context, LOG_AUTO_DELETE_MINUTES)
   fun setLogAutoDeleteMinutes(context: Context, minutes: Long) = set(context, LOG_AUTO_DELETE_MINUTES, minutes.coerceAtLeast(0L))
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Keep Alive
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isKeepAliveEnabled(context: Context): Boolean = get(context, KEEP_ALIVE_ENABLED)
   fun setKeepAliveEnabled(context: Context, enabled: Boolean) = set(context, KEEP_ALIVE_ENABLED, enabled)
@@ -466,9 +477,9 @@ object ServerPrefs {
   fun getKeepAliveMinutes(context: Context): Int = get(context, KEEP_ALIVE_MINUTES)
   fun setKeepAliveMinutes(context: Context, minutes: Int) = set(context, KEEP_ALIVE_MINUTES, minutes.coerceAtLeast(0))
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Boot & Lifecycle
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isAutoStartOnBoot(context: Context): Boolean = get(context, AUTO_START_ON_BOOT)
   fun setAutoStartOnBoot(context: Context, enabled: Boolean) = set(context, AUTO_START_ON_BOOT, enabled)
@@ -479,9 +490,9 @@ object ServerPrefs {
   fun isConfirmClearLogs(context: Context): Boolean = get(context, CONFIRM_CLEAR_LOGS)
   fun setConfirmClearLogs(context: Context, enabled: Boolean) = set(context, CONFIRM_CLEAR_LOGS, enabled)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Developer / Debug
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isVerboseDebugEnabled(context: Context): Boolean = get(context, VERBOSE_DEBUG_ENABLED)
   fun setVerboseDebugEnabled(context: Context, enabled: Boolean) = set(context, VERBOSE_DEBUG_ENABLED, enabled)
@@ -489,16 +500,16 @@ object ServerPrefs {
   fun isIgnoreClientSamplerParams(context: Context): Boolean = get(context, IGNORE_CLIENT_SAMPLER_PARAMS)
   fun setIgnoreClientSamplerParams(context: Context, enabled: Boolean) = set(context, IGNORE_CLIENT_SAMPLER_PARAMS, enabled)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Request Queueing
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isRejectWhenBusy(context: Context): Boolean = get(context, REJECT_WHEN_BUSY)
   fun setRejectWhenBusy(context: Context, enabled: Boolean) = set(context, REJECT_WHEN_BUSY, enabled)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § GPU Availability
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isGpuUnavailableDialogShown(context: Context): Boolean = get(context, GPU_UNAVAILABLE_DIALOG_SHOWN)
   fun setGpuUnavailableDialogShown(context: Context, shown: Boolean) = set(context, GPU_UNAVAILABLE_DIALOG_SHOWN, shown)
@@ -506,9 +517,9 @@ object ServerPrefs {
   fun isGpuUnavailableServerStartDismissed(context: Context): Boolean = get(context, GPU_UNAVAILABLE_SERVER_START_DISMISSED)
   fun setGpuUnavailableServerStartDismissed(context: Context, dismissed: Boolean) = set(context, GPU_UNAVAILABLE_SERVER_START_DISMISSED, dismissed)
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Home Assistant / STT
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isHaIntegrationEnabled(context: Context): Boolean = get(context, HA_INTEGRATION_ENABLED)
   fun setHaIntegrationEnabled(context: Context, enabled: Boolean) = set(context, HA_INTEGRATION_ENABLED, enabled)
@@ -524,9 +535,9 @@ object ServerPrefs {
     prefs(context).edit { putString(KEY_STT_TRANSCRIPTION_PROMPT_TEXT, text) }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Update Check
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun isUpdateCheckEnabled(context: Context): Boolean = get(context, UPDATE_CHECK_ENABLED)
   fun setUpdateCheckEnabled(context: Context, enabled: Boolean) = set(context, UPDATE_CHECK_ENABLED, enabled)
@@ -600,9 +611,9 @@ object ServerPrefs {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Engagement Prompt
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   /** Number of times the user has manually pressed "Start Server" (excludes auto-start on boot). */
   fun getManualStartCount(context: Context): Int = get(context, MANUAL_START_COUNT)
@@ -647,9 +658,9 @@ object ServerPrefs {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Model Update Detection
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun getAllowlistContentVersion(context: Context): Int = get(context, ALLOWLIST_CONTENT_VERSION)
   fun setAllowlistContentVersion(context: Context, version: Int) = set(context, ALLOWLIST_CONTENT_VERSION, version)
@@ -669,9 +680,9 @@ object ServerPrefs {
     prefs(context).edit { putStringSet(KEY_IGNORED_MODEL_UPDATES, current) }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § DataStore Corruption Recovery
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   fun getCorruptedDataStores(context: Context): Set<String> =
     prefs(context).getStringSet(KEY_CORRUPTED_DATASTORES, emptySet()) ?: emptySet()
@@ -686,9 +697,9 @@ object ServerPrefs {
     prefs(context).edit { remove(KEY_CORRUPTED_DATASTORES) }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Migrations
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   // TODO: Remove after 1.0.0 — one-time migration introduced in 0.9.0-beta.1 to move
   // per-model prefs from old keys (model.name) to stable keys (model.downloadFileName).
@@ -782,9 +793,9 @@ object ServerPrefs {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
   // § Reset & Diagnostics
-  // ══════════════════════════════════════════════════════════════════════════
+  // ═══════════════════════════════════════════════════════════════════════════════════════
 
   /**
    * Clear all settings and restore defaults. Wipes the entire SharedPreferences store,
